@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Byte Buddies — Free CS Resources for Kids &amp; Teachers</title>
+  <meta name="description" content="Free computer science learning resources for elementary and middle school students, made by high schoolers who care about your future." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────── -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">🤖</div>
+    Byte Buddies
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link active">Browse</a>
+    <a href="submit.html" class="nav-link">For High Schoolers</a>
+    <a href="submit.html" class="nav-btn">➕ Submit a Resource</a>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <div class="hero-eyebrow">✨ Free &amp; Made by Students</div>
+  <h1 class="hero-title">Learn to <span class="highlight">Code</span>,<br>Grow Your <span class="highlight">Future</span></h1>
+  <p class="hero-desc">Real resources made by real high schoolers — for kids and teachers who want to learn computer science in a fun way.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num" id="stat-resources">8</span>
+      <span class="label">Resources</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">3</span>
+      <span class="label">Formats</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">100%</span>
+      <span class="label">Free</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">❤️</span>
+      <span class="label">Student-made</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Search bar ────────────────────────────────────────── -->
+<div class="search-section">
+  <div class="search-wrapper">
+    <div class="search-input-wrap">
+      <span class="search-icon">🔍</span>
+      <input
+        type="search"
+        id="search-input"
+        placeholder="Search topics, names, or tags…"
+        aria-label="Search resources"
+        autocomplete="off"
+      />
+      <button id="clear-search" aria-label="Clear search">✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Filters ───────────────────────────────────────────── -->
+<div class="filter-section">
+  <!-- Grade level -->
+  <div class="filter-row">
+    <span class="filter-label">Grade</span>
+    <div class="filter-chips">
+      <button class="filter-chip-btn grade-btn" data-grade="K-5">🎒 K–5</button>
+      <button class="filter-chip-btn grade-btn" data-grade="6-8">📐 6–8</button>
+    </div>
+  </div>
+
+  <!-- Format -->
+  <div class="filter-row">
+    <span class="filter-label">Format</span>
+    <div class="filter-chips">
+      <button class="filter-chip-btn format-btn" data-format="mini-lecture">🎓 Mini-Lecture</button>
+      <button class="filter-chip-btn format-btn" data-format="activity">🛠️ Activity</button>
+      <button class="filter-chip-btn format-btn" data-format="inspiration">✨ Inspiration</button>
+    </div>
+  </div>
+
+  <!-- Type -->
+  <div class="filter-row">
+    <span class="filter-label">Type</span>
+    <div class="filter-chips">
+      <button class="filter-chip-btn type-btn" data-type="video">▶️ Video</button>
+      <button class="filter-chip-btn type-btn" data-type="pdf">📄 PDF</button>
+      <button class="filter-chip-btn type-btn" data-type="doc">📝 Doc</button>
+      <button class="filter-chip-btn type-btn" data-type="link">🔗 Link</button>
+    </div>
+  </div>
+
+  <!-- Tags -->
+  <div class="filter-row">
+    <span class="filter-label">Topics</span>
+    <div id="filter-tags"></div>
+  </div>
+</div>
+
+<!-- ── Results meta ──────────────────────────────────────── -->
+<div class="filter-meta-row">
+  <span id="results-count"></span>
+  <button id="clear-all-filters">Clear all filters</button>
+</div>
+
+<!-- ── Resource grid ─────────────────────────────────────── -->
+<section class="results-section">
+  <div id="results-grid"></div>
+  <div id="no-results">
+    <div class="no-results-icon">🔭</div>
+    <h3>No resources found</h3>
+    <p>Try a different search or remove some filters. More resources are added all the time!</p>
+    <a href="submit.html" class="btn-primary" style="margin-top:0.5rem">Submit one yourself →</a>
+  </div>
+</section>
+
+<!-- ── How It Works ──────────────────────────────────────── -->
+<div class="how-strip">
+  <h2>// How It Works</h2>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="step-num">1</div>
+      <h3>High Schoolers Create</h3>
+      <p>Students in 9th–12th grade make videos, guides, and activities on CS topics they love.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">2</div>
+      <h3>They Submit Here</h3>
+      <p>A simple Google Form sends the resource to our team for a quick review before it goes live.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">3</div>
+      <h3>Kids & Teachers Learn</h3>
+      <p>Younger students and teachers can browse, filter, and use everything for free, forever.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA ───────────────────────────────────────────────── -->
+<div style="padding: 0 2rem;">
+  <div class="submit-cta">
+    <h2>Are you in high school? 🙋</h2>
+    <p>Share your knowledge! Submit a video, guide, or activity and inspire the next generation of coders. It looks great on a college app too.</p>
+    <a href="submit.html" class="btn-primary">Submit a Resource →</a>
+  </div>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────── -->
+<footer>
+  <p>Made with <span class="footer-heart">♥</span> by students, for students. Byte Buddies is free and open source. 
+  <a href="https://github.com/YOUR-ORG/byte-buddies" target="_blank">Contribute on GitHub →</a></p>
+</footer>
+
+<script src="js/resources-data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  document.getElementById("stat-resources").textContent = RESOURCES.length;
+</script>
+</body>
+</html>

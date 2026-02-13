@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resource — Byte Buddies</title>
+  <meta name="description" content="View a free computer science resource from Byte Buddies." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────── -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">🤖</div>
+    Byte Buddies
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Browse</a>
+    <a href="submit.html" class="nav-link">For High Schoolers</a>
+    <a href="submit.html" class="nav-btn">➕ Submit a Resource</a>
+  </div>
+</nav>
+
+<!-- ── Detail page ──────────────────────────────────────── -->
+<main class="detail-page" id="detail-root">
+  <!-- Populated by JS below -->
+  <div id="loading" style="text-align:center; padding:4rem 0;">
+    <div style="font-size:3rem; margin-bottom:1rem;">⏳</div>
+    <p style="font-weight:700; color:var(--ink-light);">Loading resource…</p>
+  </div>
+</main>
+
+<footer>
+  <p>Made with <span class="footer-heart">♥</span> by students, for students. Byte Buddies is free and open source. 
+  <a href="https://github.com/YOUR-ORG/byte-buddies" target="_blank">Contribute on GitHub →</a></p>
+</footer>
+
+<script src="js/resources-data.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id     = params.get("id");
+  const root   = document.getElementById("detail-root");
+
+  const resource = RESOURCES.find(r => r.id === id);
+
+  if (!resource) {
+    root.innerHTML = `
+      <div style="text-align:center; padding:4rem 0;">
+        <div style="font-size:4rem; margin-bottom:1rem;">🤷</div>
+        <h1 style="font-family:var(--font-mono); font-size:1.5rem; margin-bottom:0.75rem;">Resource not found</h1>
+        <p style="color:var(--ink-light); margin-bottom:1.5rem;">Hmm, we couldn't find that one. Maybe it was removed?</p>
+        <a href="index.html" class="btn-primary">← Back to all resources</a>
+      </div>`;
+    document.title = "Not Found — Byte Buddies";
+  } else {
+    document.title = `${resource.title} — Byte Buddies`;
+
+    const typeLabel = { video: "Video", pdf: "PDF", doc: "Document", link: "Link" }[resource.resource_type] || resource.resource_type;
+    const typeIcon  = TYPE_ICONS[resource.resource_type] || "🔗";
+    const fmtIcon   = FORMAT_ICONS[resource.format] || "📚";
+    const fmtLabel  = FORMAT_LABELS[resource.format] || resource.format;
+    const initials  = resource.contributor_name.split(" ").map(n=>n[0]).join("").substring(0,2).toUpperCase();
+
+    const tagsHTML = resource.tags.map(tag =>
+      `<span class="tag" style="background:${getTagColor(tag)}">${tag}</span>`
+    ).join("");
+
+    let actionHTML;
+    if (resource.resource_type === "video") {
+      // Try to embed YouTube
+      let videoId = null;
+      try {
+        const u = new URL(resource.url);
+        if (u.hostname.includes("youtube.com")) videoId = u.searchParams.get("v");
+        else if (u.hostname.includes("youtu.be")) videoId = u.pathname.slice(1);
+      } catch(e){}
+
+      if (videoId) {
+        actionHTML = `
+          <div style="border:3px solid var(--ink); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin-bottom:1.5rem;">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/${videoId}"
+              title="${resource.title}" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen style="display:block;"></iframe>
+          </div>
+          <div class="detail-action">
+            <a href="${resource.url}" target="_blank" rel="noopener" class="btn-primary">▶️ Open on YouTube →</a>
+          </div>`;
+      } else {
+        actionHTML = `<div class="detail-action"><a href="${resource.url}" target="_blank" rel="noopener" class="btn-primary">▶️ Watch Video →</a></div>`;
+      }
+    } else if (resource.resource_type === "pdf" || resource.resource_type === "doc") {
+      actionHTML = `<div class="detail-action"><a href="${resource.url}" download class="btn-primary">⬇️ Download ${typeLabel} →</a></div>`;
+    } else {
+      actionHTML = `<div class="detail-action"><a href="${resource.url}" target="_blank" rel="noopener" class="btn-primary">🔗 Open Resource →</a></div>`;
+    }
+
+    root.innerHTML = `
+      <a href="index.html" class="detail-back">← Back to all resources</a>
+
+      <div class="detail-card">
+        <div class="detail-header">
+          <div class="detail-badges">
+            <span class="card-format-badge format-${resource.format}">${fmtIcon} ${fmtLabel}</span>
+            <span class="card-format-badge" style="background:#f0f0f0;">${typeIcon} ${typeLabel}</span>
+            <span class="grade-badge">${resource.grade_level}</span>
+          </div>
+          <h1 class="detail-title">${resource.title}</h1>
+          <div class="detail-meta">
+            <div class="detail-meta-item">
+              <span>📅</span>
+              <span>${new Date(resource.date_added).toLocaleDateString("en-US", {year:"numeric",month:"long",day:"numeric"})}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-body">
+          <p class="detail-description">${resource.description}</p>
+
+          <div class="detail-tags">${tagsHTML}</div>
+
+          <div class="detail-contributor">
+            <div class="contributor-avatar-lg">${initials}</div>
+            <div>
+              <div style="font-weight:800; font-size:0.95rem;">${resource.contributor_name}</div>
+              <div style="font-size:0.82rem; color:var(--ink-light); font-weight:600;">High School Contributor</div>
+            </div>
+          </div>
+
+          ${actionHTML}
+        </div>
+      </div>
+
+      <!-- More from same format -->
+      <div style="margin-top:3rem;">
+        <h2 class="section-title">📚 More resources like this</h2>
+        <div id="similar-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:1.25rem; margin-top:1rem;"></div>
+      </div>
+    `;
+
+    // Build similar resources
+    const similar = RESOURCES.filter(r =>
+      r.id !== resource.id && (
+        r.format === resource.format ||
+        r.tags.some(t => resource.tags.includes(t))
+      )
+    ).slice(0, 3);
+
+    const sg = document.getElementById("similar-grid");
+    similar.forEach(r => {
+      const card = document.createElement("a");
+      card.href = `resource.html?id=${r.id}`;
+      card.className = "resource-card";
+      card.style.textDecoration = "none";
+      card.innerHTML = `
+        <div class="card-header">
+          <span class="card-format-badge format-${r.format}">${FORMAT_ICONS[r.format]} ${FORMAT_LABELS[r.format]}</span>
+          <span class="card-type-icon">${TYPE_ICONS[r.resource_type]}</span>
+        </div>
+        <h3 class="card-title">${r.title}</h3>
+        <p class="card-description">${r.description}</p>
+        <div class="card-tags">${r.tags.slice(0,3).map(t=>`<span class="tag" style="background:${getTagColor(t)}">${t}</span>`).join("")}</div>
+        <div class="card-footer">
+          <div class="contributor">
+            <span class="contributor-avatar">${r.contributor_name.split(" ").map(n=>n[0]).join("").substring(0,2)}</span>
+            <span class="contributor-name">${r.contributor_name}</span>
+          </div>
+          <span class="grade-badge">${r.grade_level}</span>
+        </div>
+      `;
+      sg.appendChild(card);
+    });
+
+    if (similar.length === 0) {
+      sg.innerHTML = `<p style="color:var(--ink-light); font-weight:600; grid-column:1/-1;">More resources coming soon!</p>`;
+    }
+  }
+</script>
+</body>
+</html>
