@@ -16,7 +16,19 @@ const RESOURCES = [
     format: "mini-lecture",
     grade_level: "6-8",
     date_added: "2025-02-15"
-  }
+  },
+  {
+    id: "002",
+    title: "AI-Powered Personalized Learning Platforms",
+    description: "A slide deck that tells you about one cool application of emerging technologies.",
+    resource_type: "pdf",
+    url: "/resources/AI-Powered Personalized Learning Platforms.pdf",
+    contributor_name: "P. Y.",
+    tags: ["AI", "How It Works"],
+    format: "mini-lecture",
+    grade_level: "6-8",
+    date_added: "2025-02-15"
+  },
 ];
 
 // Tag color mapping for visual variety
