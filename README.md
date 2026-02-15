@@ -14,7 +14,7 @@ Byte Buddies is a website where high school students share videos, guides, and a
 
 If you have a resource to share, the easiest way is to fill out the Google Form on our website:
 
-**👉 [Go to the Submit page](https://YOUR-ORG.github.io/byte-buddies/submit.html)**
+**👉 [Go to the Submit page](https://docs.google.com/forms/d/e/1FAIpQLSfWZG7LccODJnR3sG7vqY-7Mn1Xsf6w8DS_wyuzbpCDG5yNJQ/viewform)**
 
 Fill in your name, a description of your resource, upload your file or paste a link, and we'll handle the rest. We'll review it and add it to the site (usually within a week).
 
